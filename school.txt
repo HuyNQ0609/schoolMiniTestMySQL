@@ -83,3 +83,8 @@ insert into Point(`id`, `course_id`, `student_id`, `point`) value (12, 4, 9, 8);
 insert into Point(`id`, `course_id`, `student_id`, `point`) value (13, 5, 10, 7);
 insert into Point(`id`, `course_id`, `student_id`, `point`) value (14, 5, 8, 9);
 insert into Point(`id`, `course_id`, `student_id`, `point`) value (15, 5, 9, 8);
+
+select * from Students where fullName like 'Nguyen%';
+select * from Students where fullName like '%Huy';
+select * from Students where age >= 18 and age <=25;
+select * from Students where id = 8 or id = 9;
