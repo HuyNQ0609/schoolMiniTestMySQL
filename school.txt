@@ -1,3 +1,5 @@
+# noinspection SqlUnusedForFile
+
 create database school_management;
 use school_management;
 
@@ -88,3 +90,48 @@ select * from Students where fullName like 'Nguyen%';
 select * from Students where fullName like '%Huy';
 select * from Students where age >= 18 and age <=25;
 select * from Students where id = 8 or id = 9;
+
+-- Statistics number of students of classes (count):
+select name, count(*)
+    as number_of_students
+from Students
+    join Classes
+        on Students.class_id = Classes.id
+group by name;
+
+-- Statistics of the number of students in the provinces (count):
+select address, count(*)
+    as number_of_students
+from Students
+    join Address
+        on Students.address_id = Address.id
+group by address;
+
+-- Average score of courses:
+select name, avg(point)
+    as average_point
+from Point
+    join Course
+        on Point.course_id = Course.id
+group by name;
+
+-- Science has the highest average score:
+select Course.name, Max(avg_point)
+    as max_point
+from (select course_id, avg(point)
+    as avg_point
+      from Point
+      group by course_id)
+    as course_avg
+    join Course
+        on Course.id = course_avg.course_id
+where avg_point = (
+    select max(avg_point)
+    from (
+        select course_id, avg(point)
+            as avg_point
+        from Point
+        group by course_id)
+        as course_avg)
+group by Course.name;
+
